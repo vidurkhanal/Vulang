@@ -197,7 +197,7 @@ mod tests {
     #[test]
     fn test_opcode_load() {
         let mut test_vm = VM::new();
-        test_vm.program = vec![];
+        test_vm.program = vec![0, 0, 1, 244];
         test_vm.run_once();
         assert_eq!(test_vm.registers[0], 500);
     }
