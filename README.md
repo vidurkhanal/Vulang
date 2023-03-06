@@ -3,10 +3,10 @@
 This is Vulang!! Lightning fast and fault tolerant. The language runs on its pure-rust VM, called VulangVM. The design is highly inspired from Erlang's BEAM and python's C based interpreter.
 
 
-## Vulang's Assembly Language Grammar
+## Grammar
 
 
-These are the standard grammatical rules for Vulang's Assembly Interface.
+These are the standard grammatical rules for Vulang's Assembly Interface. By following these rules and structures, one can write and understand programs in Vulang's assembly language.
 
 ### Program Structure
 
@@ -55,4 +55,4 @@ A newline character in our assembly language is composed of:
 
 - The symbol "\" followed by the symbol "n"
 
-By following these rules and structures, we can write and understand programs in our assembly language.
+
