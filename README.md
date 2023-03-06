@@ -3,16 +3,16 @@
 This is Vulang!! Lightning fast and fault tolerant. The language runs on its pure-rust VM, called VulangVM. The design is highly inspired from Erlang's BEAM and python's C based interpreter.
 
 
-# Vulang's Assembly Language Grammar
+## Vulang's Assembly Language Grammar
 
 
 These are the standard grammatical rules for Vulang's Assembly Interface.
 
-## Program Structure
+### Program Structure
 
 A program in our assembly language is composed of instructions.
 
-## Instruction Structure
+### Instruction Structure
 
 An instruction in our assembly language is composed of:
 
@@ -21,14 +21,14 @@ An instruction in our assembly language is composed of:
 - An integer operand
 - A newline character
 
-## Opcode Structure
+### Opcode Structure
 
 An opcode in our assembly language is composed of:
 
 - One or more letters in a row
 - A space character
 
-## Register Structure
+### Register Structure
 
 A register in our assembly language is composed of:
 
@@ -36,20 +36,20 @@ A register in our assembly language is composed of:
 - A number
 - A space character
 
-## Integer Operand Structure
+### Integer Operand Structure
 
 An integer operand in our assembly language is composed of:
 
 - The symbol "#"
 - A number
 
-## Number Structure
+### Number Structure
 
 A number in our assembly language is composed of:
 
 - The symbols 0-9
 
-## Newline Structure
+### Newline Structure
 
 A newline character in our assembly language is composed of:
 
