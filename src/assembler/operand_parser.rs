@@ -6,7 +6,7 @@ use nom::{
 
 use crate::assembler::Token;
 
-fn integer_operand(input: &str) -> IResult<&str, Token> {
+pub fn integer_operand(input: &str) -> IResult<&str, Token> {
     let (remaining_input, (_, _, reg_num)) = tuple((char('#'), space0, digit1))(input)?;
     let (remaining_input, _) = space1(remaining_input)?;
     Ok((

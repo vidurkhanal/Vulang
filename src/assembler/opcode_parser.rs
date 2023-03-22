@@ -8,7 +8,7 @@ use crate::OpCode;
 
 // named!(opcode_load<CompleteStr,Token>,do_parse!(tag!("load") >> (Token::Op { code: OpCode::LOAD })));
 
-fn opcode_load(input: &str) -> IResult<&str, Token> {
+pub fn opcode_load(input: &str) -> IResult<&str, Token> {
     let (input, _) = tag("load").parse(input)?;
     let (input, _) = space1(input)?;
     Ok((input, Token::Op { code: OpCode::LOAD }))
