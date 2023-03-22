@@ -1,4 +1,4 @@
-use crate::{instruction, VM};
+use crate::VM;
 use std::{cmp::min, io::Write, num::ParseIntError};
 
 pub struct REPL {
