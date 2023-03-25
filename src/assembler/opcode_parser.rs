@@ -14,6 +14,7 @@ pub fn opcode_load(input: &str) -> IResult<&str, Token> {
     Ok((input, Token::Op { code: OpCode::LOAD }))
 }
 
+#[allow(unused_imports)]
 mod tests {
     use super::*;
     use crate::assembler::Token;

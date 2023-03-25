@@ -6,6 +6,13 @@ pub struct REPL {
     vm: VM,
 }
 
+impl Default for REPL {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+#[allow(clippy::print_literal)]
 impl REPL {
     pub fn new() -> Self {
         Self {
@@ -46,7 +53,7 @@ impl REPL {
                 ":history" => {
                     println!("-- Command History --");
                     let n = self.command_buffer.len();
-                    for i in 0..min(n, 10 as usize) {
+                    for i in 0..min(n, 10_usize) {
                         println!(" -> {}", self.command_buffer[n - i - 1])
                     }
                     println!("-- END --")
@@ -72,25 +79,36 @@ impl REPL {
                     //     eprintln!("The compiler couldn't parse your input. Please provide valid commands and arguments")
                     // };
 
-                    let parsed_program = program(buffer);
-                    if parsed_program.is_err() {
-                        eprintln!("Unable to parse the input");
-                        continue;
-                    }
+                    // let parsed_program = program(buffer);
+                    // if parsed_program.is_err() {
+                    //     eprintln!("Unable to parse the input");
+                    //     continue;
+                    // }
 
-                    let (_, result) = parsed_program.unwrap();
-                    let bytecode = result.to_bytes();
-                    for byte in bytecode {
-                        self.vm.add_byte(byte);
-                    }
+                    // let (_, result) = parsed_program.unwrap();
+                    // let bytecode = result.to_bytes();
+                    // for byte in bytecode {
+                    //     self.vm.add_byte(byte);
+                    // }
+
+                    let program = match program(buffer) {
+                        Ok((_, program)) => program,
+                        Err(_) => {
+                            eprintln!("Unable to parse input");
+                            continue;
+                        }
+                    };
+
+                    self.vm.program.append(&mut program.to_bytes());
+
                     self.vm.run_once();
                 }
             }
         }
     }
 
-    fn parse_hex(&mut self, user_input: &str) -> Result<Vec<u8>, ParseIntError> {
-        let split: Vec<&str> = user_input.split(" ").collect::<Vec<&str>>();
+    pub fn parse_hex(&mut self, user_input: &str) -> Result<Vec<u8>, ParseIntError> {
+        let split: Vec<&str> = user_input.split(' ').collect::<Vec<&str>>();
         let mut res: Vec<u8> = vec![];
         for hex_string in split {
             let byte: u8 = u8::from_str_radix(hex_string, 16)?;

@@ -1,7 +1,5 @@
 use nom::{combinator::eof, multi::many_till, IResult};
 
-use crate::instruction;
-
 use super::instruction_parser::{instruction_one, AssemblerInstruction};
 
 #[derive(Debug, PartialEq)]
