@@ -1,4 +1,4 @@
-use nom::bytes::streaming::tag;
+use nom::bytes::complete::tag_no_case;
 use nom::character::complete::space1;
 use nom::{IResult, Parser};
 
@@ -9,7 +9,7 @@ use crate::OpCode;
 // named!(opcode_load<CompleteStr,Token>,do_parse!(tag!("load") >> (Token::Op { code: OpCode::LOAD })));
 
 pub fn opcode_load(input: &str) -> IResult<&str, Token> {
-    let (input, _) = tag("load").parse(input)?;
+    let (input, _) = tag_no_case("load").parse(input)?;
     let (input, _) = space1(input)?;
     Ok((input, Token::Op { code: OpCode::LOAD }))
 }

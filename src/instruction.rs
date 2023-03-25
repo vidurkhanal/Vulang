@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum OpCode {
     HLT,
     IGL,
@@ -20,23 +20,25 @@ pub enum OpCode {
 }
 
 impl From<u8> for OpCode {
-    fn from(value: u8) -> Self {
-        match value {
-            0 => OpCode::LOAD,
-            1 => OpCode::HLT,
-            2 => OpCode::ADD,
-            3 => OpCode::SUB,
-            4 => OpCode::MUL,
-            5 => OpCode::DIV,
-            6 => OpCode::JMP,
-            7 => OpCode::JMPF,
-            8 => OpCode::JMPB,
-            9 => OpCode::EQ,
-            11 => OpCode::GT,
-            12 => OpCode::LT,
-            13 => OpCode::GTQ,
-            14 => OpCode::LTQ,
-            15 => OpCode::JEQ,
+    fn from(byte: u8) -> Self {
+        match byte {
+            0 => OpCode::HLT,
+            1 => OpCode::IGL,
+            2 => OpCode::LOAD,
+            3 => OpCode::ADD,
+            4 => OpCode::SUB,
+            5 => OpCode::MUL,
+            6 => OpCode::DIV,
+            7 => OpCode::JMP,
+            8 => OpCode::JMPF,
+            9 => OpCode::JMPB,
+            10 => OpCode::EQ,
+            11 => OpCode::NEQ,
+            12 => OpCode::GT,
+            13 => OpCode::LT,
+            14 => OpCode::GTQ,
+            15 => OpCode::LTQ,
+            16 => OpCode::JEQ,
             _ => OpCode::IGL,
         }
     }

@@ -11,6 +11,47 @@ pub struct AssemblerInstruction {
     operand3: Option<Token>,
 }
 
+impl AssemblerInstruction {
+    fn extract_operand(t: &Token, results: &mut Vec<u8>) {
+        match t {
+            Token::Register { reg_num } => results.push(*reg_num),
+            Token::IntegerOperand { value } => {
+                let converted = *value as u16;
+                let byte1 = converted;
+                let byte2 = converted >> 8;
+                results.push(byte2 as u8);
+                results.push(byte1 as u8);
+            }
+            _ => {
+                eprintln!("No Operand found");
+                std::process::exit(1)
+            }
+        }
+    }
+
+    pub fn to_bytes(&self) -> Vec<u8> {
+        let mut results: Vec<u8> = Vec::new();
+        match self.opcode {
+            Token::Op { code } => match code {
+                _ => results.push(code as u8),
+            },
+            _ => {
+                eprintln!("Invalid OpCode provided.");
+                std::process::exit(1)
+            }
+        }
+
+        for operand in vec![&self.operand1, &self.operand2, &self.operand3] {
+            match operand {
+                Some(t) => AssemblerInstruction::extract_operand(&t, &mut results),
+                None => {}
+            }
+        }
+
+        results
+    }
+}
+
 pub fn instruction_one(input: &str) -> IResult<&str, AssemblerInstruction> {
     let (input, o) = opcode_load(input)?;
     let (input, r) = register(input)?;
@@ -35,14 +76,14 @@ mod test_parser {
 
     #[test]
     fn instruction_one_test() {
-        let result = instruction_one("load $0 #100 \n");
+        let result = instruction_one("load $1 #100\n");
         assert!(result.is_ok());
         let (_, assembler_token) = result.unwrap();
         assert_eq!(
             assembler_token,
             AssemblerInstruction {
                 opcode: Token::Op { code: OpCode::LOAD },
-                operand1: Some(Token::Register { reg_num: 0 }),
+                operand1: Some(Token::Register { reg_num: 1 }),
                 operand2: Some(Token::IntegerOperand { value: 100 }),
                 operand3: None
             }
