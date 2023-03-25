@@ -1,4 +1,4 @@
-use crate::VM;
+use crate::{assembler::program_parser::program, VM};
 use std::{cmp::min, io::Write, num::ParseIntError};
 
 pub struct REPL {
@@ -64,14 +64,25 @@ impl REPL {
                     println!("-- END --")
                 }
                 _ => {
-                    if let Ok(bytes) = self.parse_hex(buffer) {
-                        for byte in bytes {
-                            self.vm.add_byte(byte)
-                        }
-                    } else {
-                        eprintln!("The compiler couldn't parse your input. Please provide valid commands and arguments")
-                    };
+                    // if let Ok(bytes) = self.parse_hex(buffer) {
+                    //     for byte in bytes {
+                    //         self.vm.add_byte(byte)
+                    //     }
+                    // } else {
+                    //     eprintln!("The compiler couldn't parse your input. Please provide valid commands and arguments")
+                    // };
 
+                    let parsed_program = program(buffer);
+                    if parsed_program.is_err() {
+                        eprintln!("Unable to parse the input");
+                        continue;
+                    }
+
+                    let (_, result) = parsed_program.unwrap();
+                    let bytecode = result.to_bytes();
+                    for byte in bytecode {
+                        self.vm.add_byte(byte);
+                    }
                     self.vm.run_once();
                 }
             }
